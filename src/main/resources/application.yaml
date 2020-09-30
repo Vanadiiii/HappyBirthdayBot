@@ -1,0 +1,7 @@
+bot:
+  name: "HappyBirthdayCongratulationsBot"
+  token: "1379206109:AAHuXjCEs52KvF6xxmVvvZODRwn8EE0YQh8"
+proxy:
+  host: "127.0.0.1"
+  port: 9150
+  type: SOCKS4
