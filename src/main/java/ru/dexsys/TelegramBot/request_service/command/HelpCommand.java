@@ -24,6 +24,7 @@ public class HelpCommand extends AbstractCommand {
     public void execute(AbsSender absSender, User user, Chat chat, String[] arguments) {
         String text = EnumSet.allOf(Command.class)
                 .stream()
+                .filter(Command::isUserCommand)
                 .map(Enum::name)
                 .map(name -> "/" + name.toLowerCase())
                 .map(StringBuilder::new)

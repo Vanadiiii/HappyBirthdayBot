@@ -9,26 +9,28 @@ import org.telegram.telegrambots.meta.bots.AbsSender;
 import ru.dexsys.TelegramBot.model.SavedUser;
 import ru.dexsys.TelegramBot.model.SavedUserService;
 
+import java.util.stream.Collectors;
+
 @Slf4j
 @Component
-public class StartCommand extends AbstractCommand {
-    public StartCommand(SavedUserService savedUserService) {
-        super(Command.START, savedUserService);
+public class PrintAllUsersCommand extends AbstractCommand {
+    public PrintAllUsersCommand(SavedUserService savedUserService) {
+        super(Command.PRINT, savedUserService);
     }
 
     @Override
     public void execute(AbsSender absSender, User user, Chat chat, String[] arguments) {
         Long chatId = chat.getId();
-        String userName = user.getUserName();
 
-        String text = "Hello, " + user.getFirstName() + "!\n"
-                + "Welcome to HappyBirthdayBot!\n";
+        String text = "There are all saved users:\n" +
+                savedUserService.getSavedUsers()
+                        .stream()
+                        .map(SavedUser::toString)
+                        .collect(Collectors.joining(",\n", "\t", ""));
 
         SendMessage message = new SendMessage()
                 .setChatId(chatId)
                 .setText(text);
-
-        log.info("User #{} was saved", userName);
 
         execute(absSender, message, user);
     }
